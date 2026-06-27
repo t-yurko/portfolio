@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Portfolio – Skills</title>
+  <script>
+    const lang = navigator.language || navigator.userLanguage;
+    if (lang.startsWith('uk') || lang.startsWith('ru')) {
+      location.replace('/skills/uk');
+    } else if (lang.startsWith('pl')) {
+      location.replace('/skills/pl');
+    } else {
+      location.replace('/skills/en');
+    }
+  </script>
+</head>
+<body></body>
+</html>

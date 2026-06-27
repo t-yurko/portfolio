@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio – Umiejętności techniczne</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0d1117;
+      --surface:   #161b22;
+      --border:    #21262d;
+      --text:      #e6edf3;
+      --muted:     #8b949e;
+      --accent:    #58a6ff;
+      --accent2:   #3fb950;
+      --tag-bg:    #1c2230;
+      --tag-border:#2d3748;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 4rem 2rem 3rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% -20%, rgba(88,166,255,.12) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 80% 120%, rgba(63,185,80,.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin: 0 auto 1.25rem;
+      box-shadow: 0 0 0 4px var(--surface), 0 0 0 5px var(--border);
+    }
+
+    header h1 {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 700;
+      letter-spacing: -.5px;
+    }
+
+    header p {
+      color: var(--muted);
+      margin-top: .5rem;
+      font-size: .95rem;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      justify-content: center;
+      margin-top: 1.25rem;
+    }
+
+    .badge {
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      border-radius: 999px;
+      padding: .2rem .75rem;
+      font-size: .78rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--muted);
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 5rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: border-color .2s, transform .2s, box-shadow .2s;
+    }
+
+    .card:hover {
+      border-color: rgba(88,166,255,.4);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,0,0,.35);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: .65rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .card-icon {
+      font-size: 1.3rem;
+      line-height: 1;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .skill-list {
+      display: flex;
+      flex-direction: column;
+      gap: .55rem;
+    }
+
+    .skill-item {
+      display: flex;
+      flex-direction: column;
+      gap: .15rem;
+    }
+
+    .skill-name {
+      font-size: .875rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .skill-name .key {
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .82rem;
+    }
+
+    .skill-desc {
+      font-size: .78rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .45rem;
+    }
+
+    .tag {
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      border-radius: 6px;
+      padding: .25rem .6rem;
+      font-size: .8rem;
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+      transition: color .15s, border-color .15s;
+    }
+
+    .tag:hover {
+      color: var(--accent);
+      border-color: rgba(88,166,255,.45);
+    }
+
+    .tag.green { color: var(--accent2); }
+    .tag.blue  { color: var(--accent); }
+
+    .section-label {
+      font-size: .7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+      margin-bottom: .75rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: .8rem;
+    }
+
+    .lang-switcher {
+      position: fixed;
+      top: 1rem;
+      right: 1.5rem;
+      display: flex;
+      gap: .35rem;
+      z-index: 100;
+    }
+
+    .lang-btn {
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      border-radius: 6px;
+      padding: .3rem .65rem;
+      font-size: .75rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .15s, border-color .15s, background .15s;
+    }
+
+    .lang-btn:hover {
+      color: var(--accent);
+      border-color: rgba(88,166,255,.45);
+    }
+
+    .lang-btn.active {
+      color: var(--accent);
+      border-color: rgba(88,166,255,.5);
+      background: rgba(88,166,255,.08);
+      pointer-events: none;
+    }
+
+    @media (max-width: 480px) {
+      header { padding: 2.5rem 1.25rem 2rem; }
+      .grid  { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="lang-switcher">
+  <a href="/skills/pl/" class="lang-btn active">PL</a>
+  <a href="/skills/en/" class="lang-btn">EN</a>
+  <a href="/skills/uk/" class="lang-btn">UA</a>
+</nav>
+
+<header>
+  <div class="avatar">💻</div>
+  <h1>Umiejętności techniczne</h1>
+  <p>Administracja systemami · Sieci · DevOps · Programowanie · Grafika</p>
+  <div class="badge-row">
+    <span class="badge">Linux</span>
+    <span class="badge">Python</span>
+    <span class="badge">Cloudflare</span>
+    <span class="badge">AI / LLM</span>
+    <span class="badge">GitHub Actions</span>
+    <span class="badge">Supabase</span>
+    <span class="badge">Docker</span>
+  </div>
+</header>
+
+<main>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">🖥️</span>
+        <span class="card-title">Systemy operacyjne</span>
+      </div>
+      <div class="skill-list">
+        <div class="skill-item">
+          <span class="skill-name"><span class="key">Linux</span></span>
+          <span class="skill-desc">Codzienne użytkowanie, praca w terminalu, administracja serwerami</span>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name"><span class="key">Windows</span> / <span class="key">Windows Server</span></span>
+          <span class="skill-desc">Zaawansowana obsługa, konfiguracja i zarządzanie serwerem</span>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name"><span class="key">Active Directory</span></span>
+          <span class="skill-desc">Zarządzanie użytkownikami i zasobami domenowymi (AD DS)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">🌐</span>
+        <span class="card-title">Sieci komputerowe</span>
+      </div>
+      <div class="skill-list">
+        <div class="skill-item">
+          <span class="skill-name"><span class="key">Routery i switche</span></span>
+          <span class="skill-desc">Konfiguracja urządzeń fizycznych</span>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name"><span class="key">VLAN</span></span>
+          <span class="skill-desc">Projektowanie i konfiguracja sieci wirtualnych</span>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name"><span class="key">VPN</span></span>
+          <span class="skill-desc">Konfiguracja tuneli – WireGuard, OpenVPN</span>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name"><span class="key">DNS</span></span>
+          <span class="skill-desc">Konfiguracja i zarządzanie strefami</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">☁️</span>
+        <span class="card-title">Chmura i DevOps</span>
+      </div>
+      <div class="tags">
+        <span class="tag blue">VPS / Linux</span>
+        <span class="tag blue">Git &amp; GitHub</span>
+        <span class="tag blue">GitHub Actions</span>
+        <span class="tag blue">Google Cloud</span>
+        <span class="tag blue">Supabase</span>
+        <span class="tag blue">Cloudflare</span>
+        <span class="tag blue">Docker</span>
+        <span class="tag blue">Apache</span>
+        <span class="tag blue">Nginx</span>
+      </div>
+      <div class="skill-list" style="margin-top:1rem;">
+        <div class="skill-item">
+          <span class="skill-desc">Wdrażanie i utrzymanie serwerów (Linode/Akamai), pipeline'y CI/CD, DNS/CDN/WAF przez Cloudflare, konteneryzacja.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">💻</span>
+        <span class="card-title">Programowanie</span>
+      </div>
+      <div class="skill-list">
+        <div class="skill-item">
+          <span class="skill-name"><span class="key">Python</span> <span style="color:var(--accent2);font-size:.75rem;">● zaawansowany</span></span>
+          <span class="skill-desc">Boty Telegram, automatyzacja, skrypty</span>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name"><span class="key">Golang</span></span>
+          <span class="skill-desc">Podstawy, proste samodzielne projekty</span>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name"><span class="key">Google Apps Script</span></span>
+          <span class="skill-desc">Automatyzacja Formularzy i Arkuszy Google</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">🌍</span>
+        <span class="card-title">Web development</span>
+      </div>
+      <div class="tags" style="margin-bottom:.9rem;">
+        <span class="tag">HTML &amp; CSS</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">PHP</span>
+        <span class="tag green">Flask</span>
+        <span class="tag green">FastAPI</span>
+      </div>
+      <div class="skill-desc" style="color:var(--muted);font-size:.8rem;">
+        Lekkie aplikacje webowe, REST API w Pythonie (Flask, FastAPI), skrypty front- i back-end.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">🗄️</span>
+        <span class="card-title">Bazy danych</span>
+      </div>
+      <div class="tags">
+        <span class="tag">SQL / MySQL</span>
+        <span class="tag">SQLite</span>
+        <span class="tag green">Supabase (PostgreSQL)</span>
+        <span class="tag">Microsoft Access</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">🤖</span>
+        <span class="card-title">AI / LLM</span>
+      </div>
+      <div class="skill-list">
+        <div class="skill-item">
+          <span class="skill-name"><span class="key">Duże modele językowe</span></span>
+          <span class="skill-desc">Praktyczna praca z LLM, integracje i tworzenie aplikacji</span>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name"><span class="key">OpenAI API</span></span>
+          <span class="skill-desc">Integracja i tworzenie aplikacji</span>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name"><span class="key">Claude Code</span></span>
+          <span class="skill-desc">Automatyzacja zadań programistycznych z użyciem AI</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">🔧</span>
+        <span class="card-title">Serwis i hardware</span>
+      </div>
+      <div class="skill-list">
+        <div class="skill-item">
+          <span class="skill-desc">Diagnostyka i naprawa komputerów oraz urządzeń peryferyjnych, instalacja systemów operacyjnych, montaż i rozbudowa zestawów komputerowych.</span>
+        </div>
+        <div class="skill-item" style="margin-top:.25rem;">
+          <span class="tag" style="display:inline-block;width:fit-content;">kwalifikacja INF.02</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">🎨</span>
+        <span class="card-title">Grafika i multimedia</span>
+      </div>
+      <div class="section-label">Adobe</div>
+      <div class="tags" style="margin-bottom:.9rem;">
+        <span class="tag">Photoshop</span>
+        <span class="tag">Illustrator</span>
+        <span class="tag">Premiere Pro</span>
+        <span class="tag">After Effects</span>
+      </div>
+      <div class="section-label">Inne</div>
+      <div class="tags">
+        <span class="tag">GIMP</span>
+        <span class="tag">FreeCAD</span>
+        <span class="tag">DaVinci Resolve</span>
+        <span class="tag">REAPER</span>
+        <span class="tag">FFmpeg</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">🛠️</span>
+        <span class="card-title">Środowiska i narzędzia</span>
+      </div>
+      <div class="skill-list">
+        <div class="skill-item">
+          <span class="skill-name"><span class="key">PyCharm</span></span>
+          <span class="skill-desc">Główne środowisko do Pythona</span>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name"><span class="key">Visual Studio Code</span></span>
+          <span class="skill-desc">Uniwersalne środowisko, codzienna praca</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <p><a href="https://github.com/t-yurko">GitHub</a> | <a href="mailto:taras@t-yurchenko.dev">Email</a></p>
+</footer>
+
+</body>
+</html>
